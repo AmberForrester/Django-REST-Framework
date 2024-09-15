@@ -3,20 +3,19 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from products.models import Product
+from products.serializers import ProductSerializer
 
-
-@api_view(['POST']) # Now a Django REST Framework API VIEW:
+@api_view(['GET']) # Now a Django REST Framework API VIEW:
 def api_home(request, *args, **kwargs): 
     
     """ DRF API VIEW """
     
     
-    model_data = Product.objects.all().order_by('?').first()
+    instance = Product.objects.all().order_by('?').first()
     data = {}
     
-    if model_data:
-        data = model_to_dict(model_data, fields=['id', 'title', 'price']) # Clean and easy way to narrow down data from a Model Instance
-    
+    if instance:
+        data = ProductSerializer(instance).data
     return Response(data)
     
     
