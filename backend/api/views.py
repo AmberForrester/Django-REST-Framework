@@ -1,13 +1,15 @@
-import json
 from django.forms.models import model_to_dict
-from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from products.models import Product
 
+
+@api_view(['POST']) # Now a Django REST Framework API VIEW:
 def api_home(request, *args, **kwargs): 
-    # Process of serialization: take a representation of model instance (model_data) -> we want to turn it into a Python Dict -> return JSON to my client
-    # Take a manual approach to the JsonResponse: 
-    # Convert Django Model instance to Dict 
+    
+    """ DRF API VIEW """
+    
     
     model_data = Product.objects.all().order_by('?').first()
     data = {}
@@ -15,13 +17,30 @@ def api_home(request, *args, **kwargs):
     if model_data:
         data = model_to_dict(model_data, fields=['id', 'title', 'price']) # Clean and easy way to narrow down data from a Model Instance
     
-    return JsonResponse(data)
+    return Response(data)
     
     
     
     
     
     
+    
+    
+    # Process of serialization: take a representation of model instance (model_data) -> we want to turn it into a Python Dict -> return JSON to my client
+    # Take a manual approach to the JsonResponse: 
+    # Convert Django Model instance to Dict 
+    # import json
+    # from django.http import JsonResponse
+    """ def api_home(request, *args, **kwargs): 
+    
+    model_data = Product.objects.all().order_by('?').first()
+    data = {}
+    
+    if model_data:
+        data = model_to_dict(model_data, fields=['id', 'title', 'price']) # Clean and easy way to narrow down data from a Model Instance
+    
+    return JsonResponse(data) """
+
     
     # return JsonResponse(data): accepts a Dict as an argument
     
