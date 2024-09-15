@@ -1,7 +1,42 @@
 import json
 from django.http import JsonResponse
 
-def api_home(request, *args, **kwargs): # This request being passed through is an HttpRequest instance from Django.
+from products.models import Product
+
+def api_home(request, *args, **kwargs): 
+    
+    model_data = Product.objects.all().order_by('?').first()
+    data = {}
+    
+    if model_data:
+        data['id'] = model_data.id
+        data['title'] = model_data.title
+        data['content'] = model_data.content 
+        data['price'] = model_data.price 
+        # Process of serialization: take a representation of model instance (model_data) -> we want to turn it into a Python Dict -> return JSON to my client
+        
+        # Take a manual approach to the JsonResponse: 
+           
+    return JsonResponse(data)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    """ # This request being passed through is an HttpRequest instance from Django.
     # print(dir(request))
     # request.body
     
@@ -24,3 +59,4 @@ def api_home(request, *args, **kwargs): # This request being passed through is a
 
 # Highlight what to know on any given View on Django, using JSON responses
 # For examples the data ['headers'] could not be converted to JSON data, so we need to manually input the dict(request.headers)
+ """
