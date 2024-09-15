@@ -5,18 +5,20 @@ from rest_framework.response import Response
 from products.models import Product
 from products.serializers import ProductSerializer
 
-@api_view(['GET']) # Now a Django REST Framework API VIEW:
+# Django REST Framework API VIEW - 
+@api_view(['POST']) # POST method there to ingest data as secure as possible
 def api_home(request, *args, **kwargs): 
     
     """ DRF API VIEW """
     
-    
-    instance = Product.objects.all().order_by('?').first()
-    data = {}
-    
-    if instance:
-        data = ProductSerializer(instance).data
-    return Response(data)
+    # Makes sure the data being sent to API endpoint, matches hthe requirements of the serializer and the model. 
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        print(serializer.data)
+        data = serializer.data
+        return Response(serializer.data)
+    return Response({'invalid': 'not good data'}, status=400)
     
     
     

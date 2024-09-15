@@ -4,7 +4,7 @@ import requests
 endpoint = 'http://localhost:8000/api/' # http://127.0.0.1:8000/
 
 # HTTP Library for Python
-get_response = requests.get(endpoint, json={'product_id': 123}) # HTTP Request
+get_response = requests.post(endpoint, json={'title': 'Hello World'}) # HTTP Request
 # print(get_response.text)# print raw test response - data that your application can use.
 
 print(get_response.json()) # Django API endpoint
