@@ -1,7 +1,7 @@
 import requests
 
 # We want to control the endpoint of what someone will see.
-endpoint = 'http://localhost:8000/' # http://127.0.0.1:8000/
+endpoint = 'http://localhost:8000/api/' # http://127.0.0.1:8000/
 
 # HTTP Library for Python
 get_response = requests.get(endpoint, json={'query':'Hello World'}) # HTTP Request
@@ -70,5 +70,6 @@ get_response = print(get_response.json()) """
 # Now will echo back what was sent to it, as seen below:
 """ {'args': {}, 'data': '{"query": "Hello World"}', 'files': {}, 'form': {}, 'headers': {'Accept': '*/*', 'Accept-Encoding': 'gzip, deflate', 'Content-Length': '24', 'Content-Type': 'application/json', 'Host': 'httpbin.org', 'User-Agent': 'python-requests/2.32.3', 'X-Amzn-Trace-Id': 'Root=1-66e61d64-4d90cf102c6670d51be1f21a'}, 'json': {'query': 'Hello World'}, 'method': 'GET', 'origin': '99.228.197.87', 'url': 'https://httpbin.org/anything'} """
 
-# print(get_response.headers)
+print(get_response.json()['message']) # Django API endpoint
+# print(get_response.headers) 
 # print(get_response.status_code)
